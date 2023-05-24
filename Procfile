@@ -1,1 +1,1 @@
-web gunicorn QUICKJOBS.wsgi:application --log-file -
+web: gunicorn QuickJobs.wsgi:
