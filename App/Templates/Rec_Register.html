@@ -1,0 +1,98 @@
+{% extends 'Home.html' %}
+
+{%block "content" %}
+{%load static%}
+<div class="row">
+<div class="col-6 offset-3">
+    {%if messages %}
+    {%for msg in messages%}
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{msg}}</strong>
+      </div>
+    {%endfor%}
+    {%endif%}
+</div>
+</div>
+<div class="container" style="background-color: antiquewhite;">
+    <div class="row border justify-content-end">
+        <div class="col-3">
+            <table>
+                <tr>
+                    <td></td>
+                    <center>
+                        <td colspan="2"><img src="{% static 'images/green.svg' %}" style="padding: 30px;"></td>
+                    </center>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-ok-sign">&NonBreakingSpace;</span></td>
+                    <td>Build your profile and let Job seekers find you</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-ok-sign">&NonBreakingSpace;</td>
+                    <td>Get right candidate details to your email</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-ok-sign">&NonBreakingSpace;</span></td>
+                    <td>Build your profile and let candidates find you</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-9">
+            <h2
+                style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                Find a job & grow your career</h2>
+            <br>
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Full Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Enter Name" name="Name"
+                            style="width:300px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Company Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Enter a name as per registered "
+                            name="Company_Name" style="width:300px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Email:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Email" placeholder="Enter Your Email" name="Email"
+                            style="width:300px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="PWD"
+                            style="width:300px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Mobile Number:</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="MOB" placeholder="Enter Your Mobile Number"
+                            name="MOB" style="width:300px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2"> Company Logo: jpg/png file</label>
+                    <div class="col-sm-10">
+                        <input type="file" id="Resume" name="Logo" style="height: fit-content;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-2 ">
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

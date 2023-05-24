@@ -1,0 +1,117 @@
+{% extends "Home.html" %}
+
+{% block "content" %}
+{%load static%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 ml-5">
+            <div class="p-3 mb-5 bg-white rounded">
+                <div class="d-flex flex-end justify-content-start mb-3">
+                    <div class="mr-auto">
+                        <span class="badge badge-info">Required Profile</span>
+                        <h4>{{Jobs.Role}} <small><i>{{Jobs.Date_Of_Post}}</i></small></h4>
+                        <div class="d-flex justify-content-start">
+                            <div><i class="bi bi-bag"></i>&NonBreakingSpace;{{Jobs.Experience}}</div>
+                            <div class="ml-3">&#8377;&NonBreakingSpace;{{Jobs.Salary}}</div>
+                            <div class="ml-3"><span class="bi bi-pin-map"></span>&NonBreakingSpace;{{Jobs.Location}}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start mt-2">
+                            <div><i class="bi bi-mortarboard-fill"></i> {{Jobs.Education}}&NonBreakingSpace;
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start mt-2">
+                            <div id="Desc"><i class="bi bi-file-earmark-text">&NonBreakingSpace;</i>{{Jobs.Description}}
+                            </div>
+                        </div>
+                        <div class="d-flex flex-end justify-content-start mb-3">
+                            <div class="mt-2 ml-auto">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <label for="list">Skills required</label>
+                                <ul id="Skillcard">
+                                    {%for Skill in Skills%}
+                                    <li>{{Skill.ITSkill}}</li>
+                                    {%endfor%}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2 offset-3">
+            <div class="card bg-primary">
+                <div class="card-body ml-3">
+                    <label for="candi">Job Applicants List</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-5">
+            {%if Candidates %}
+            {%for Jobs in Candidates %}
+            <div class="row ml-2">
+                <div class="col-7 ml-5 shadow p-3 mb-5 bg-white rounded">
+                    <div class="d-flex flex-end justify-content-start mb-3 ml-3">
+                        <div class="mr-auto">
+                            <h4>{{Jobs.CandidateId.Name}} <small><i>{{Jobs.DateTime}}</i></small></h4>
+                            <div class="d-flex justify-content-start">
+                                <div><i class="bi bi-bag"></i>&NonBreakingSpace;{{Jobs.CandidateId.Experience}}
+                                </div>
+                                <div class="ml-3">&#8377;&NonBreakingSpace;{{Jobs.CandidateId.Salary}}</div>
+                                <div class="ml-3"><span
+                                        class="bi bi-pin-map"></span>&NonBreakingSpace;{{Jobs.CandidateId.Hometown}}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mt-2">
+                                <div><i class="bi bi-mortarboard-fill"></i>
+                                    {% for i in Education %}
+                                    {% if Jobs.CandidateId == i.JobCkrBELONG %}
+                                    {{i.Course}}
+                                    {%endif%}
+                                    {%endfor%}
+                                    &NonBreakingSpace;</div>
+                            </div>
+                            <div class="d-flex justify-content-start mt-2">
+                                <div><i
+                                        class="bi bi-file-earmark-text">&NonBreakingSpace;</i>{{Jobs.CandidateId.Resume_Headline}}
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <img {%if Jobs.CandidateId.Photo.url %} src="{{Jobs.CandidateId.Photo.url}}" {% else %}
+                                src="{% static 'images/img_avatar3.png' %}" alt="John Doe" {%endif%}
+                                class="rounded-circle ml-4" style="width:70px;">
+                            <div class="mt-2"><a href="/SeeCandidate_Profile/{{Jobs.CandidateId.id}}" class="btn btn-primary"
+                                    role="button">View
+                                    Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            {%else%}
+            <center>
+                <div class="mt-4">
+                    <span class="bg-primary p-3">No Job Posted Yet</span>
+                </div>
+            </center>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+{%endblock%}

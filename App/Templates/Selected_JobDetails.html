@@ -1,0 +1,65 @@
+{% extends "Home.html" %}
+
+{% block "content" %}
+<div class="container-fluid">
+    <div class="row ml-5">
+        <div class="col-11 ">
+            <div class="card shadow p-3 mb-5 bg-light rounded">
+                <div class="card-body">
+                    <div class="p-3 shadow p-3 mb-5 bg-light rounded">
+                        <div class="d-flex flex-end justify-content-start">
+                            <div class="ml-4">
+                                <h4><a href="#" style="color: rgb(59, 54, 54);">{{JobListing.Role}} <small class="ml-3">
+                                            Posted on {{JobListing.Date_Of_Post}}</small></a></h4>
+                            </div>
+                            <div class="ml-auto">
+                                <a href="/SubmitAppliedJob/{{JobListing.id}}" class="btn"
+                                    style="background-color: #838aca; color: aliceblue;" role="button">Apply</a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div><i class="bi bi-bag"></i>&NonBreakingSpace;{{JobListing.Experience}}</div>
+                        <div class="ml-1 mt-2">&#8377;&NonBreakingSpace;{{JobListing.Salary}}</div>
+                        <div class="ml-1 mt-2"><span
+                                class="bi bi-pin-map"></span>&NonBreakingSpace;{{JobListing.Location}}
+                        </div>
+                        <div class="ml-1 mt-2"><i class="bi bi-pin"></i>&NonBreakingSpace;{{JobListing.Employment_Type}}
+                        </div>
+                    </div>
+                    <div><label>Industry Type :</label>&NonBreakingSpace; {{JobListing.Industry_Type}}</div>
+                    <div><label>Department :</label>&NonBreakingSpace; {{JobListing.Department}}</div>
+                    <div><label>Education :</label>&NonBreakingSpace; {{JobListing.Industry_Type}}</div>
+                    <div><i class="bi bi-file-earmark-text">&NonBreakingSpace;</i>{{JobListing.Description}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="shadow p-3 mb-5 bg-light rounded">
+                        <span class="bg-info p-3"><label style="color: aliceblue;">Company Details</label></span>
+                        <div class="mt-5">
+                            <div><label for="Name">Name -</label></td>
+                                {{JobListing.Company.Company_Name}}</div>
+                            <div><label for="Email">Email -</label>
+                                {{JobListing.Company.Company_Name}}</div>
+                            <div><label for="MOB">Mobile Number - </label>
+                                {{JobListing.Company.MOB}}</div>
+                            <div><label for="Address">Address -</label>
+                                {{JobListing.Company.Address}}</div>
+                            <div><label for="City">City -</label>
+                                {{JobListing.Company.City}}</div>
+                            <div><label for="Manpower">Manpower -</label>
+                                {{JobListing.Company.Manpower}}</div>
+                            <hr>
+                            <b style="color: rgb(59, 54, 54); font-size: large;">Company Information</b>
+                            <div class="p-3">
+                                {{JobListing.Company.Com_Description}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

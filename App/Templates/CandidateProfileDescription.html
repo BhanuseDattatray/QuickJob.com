@@ -1,0 +1,154 @@
+{% extends "Home.html" %}
+
+{%block "content" %}
+
+<div class="row justify-content-start ml-5">
+    <div class="col-8 ml-5">
+        <div id="DisplayPro" class="border border p-3 shadow p-3 rounded">
+            <div class="row">
+                <div class="col-md-1 p-5">
+                    {%if ID.Photo %}
+                    <img src="{{ID.Photo.url}}" class="rounded-circle" id="User_Photo">
+                    {%else%}
+                    <div id="Photo"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                            class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                            <path
+                                d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        </svg></div>
+                    {%endif%}
+                </div>
+                <div class="col-6 offset-1 mt-4">
+                    <b style="color: rgb(253, 245, 245); font-size: large;">{{ID.Name}}</b>
+                    <table id="ProfileTable">
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-map-marker"></span>
+                            </td>
+                            <td>
+                                <label>{{ID.Hometown}}</label>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-earphone"></span>
+                            </td>
+                            <td><label id="lbl">{{ID.MOB}}</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-briefcase"></span>
+                            </td>
+                            <td>
+                                <label id="lbl">{{ID.Experience}}</label>
+                            </td>
+                            <td>
+                                <div id="Pr5">&#8377;
+                                </div>
+                            </td>
+                            <td><label id="lbl">{{ID.Salary}}</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="Pr3"><span class="glyphicon glyphicon-calendar"></span></div>
+                            </td>
+                            <td><label id="lbl">Available to join in -&NonBreakingSpace;{{ID.Available_to_Join}}</label>
+                            </td>
+                            <td>
+                                <div id="Pr3"><span class="glyphicon glyphicon-calendar"></span>
+                            </td>
+                            <td><label id="lbl">{{ID.DOB}}</label></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-5 ml-5 mt-4"><span class="bg-primary p-3 ml-5">Contact Candidate</span></div>
+                <div><label>Email</label>- For Paid Members Only</div>
+                <div><label>Mobile Number</label>- For Paid Members Only</div>
+                <div class="ml-5 mt-3"><a href="/Services_Rec" class="btn btn-info"
+                        role="button">Check For Premium Services</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-start ml-5">
+    <div class="col-8 ml-5">
+        <div id="ResumeHeadline" class="border border p-3 shadow p-3 bg-white rounded">
+            <b style="color: rgb(59, 54, 54); font-size: large;">Resume Headline</b>
+            <hr>
+            <span>{{ID.Resume_Headline}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-start ml-5">
+    <div class="col-8 ml-5">
+        <div id="Education" class="border border p-3 shadow p-3 bg-white rounded">
+            <b style="color: rgb(59, 54, 54); font-size: large;">Education&NonBreakingSpace; <i
+                    class="bi bi-mortarboard-fill"></i></b>
+            <hr>
+            <div>
+                {%if User_Ed%}
+                <div class="card">
+                    <div class="card-body">
+                        {%for Ed in User_Ed %}
+                        <div><label>Education :</label>{{Ed.Education}}</div>
+                        <div><label>University :</label>{{Ed.University}}</div>
+                        <div><label>Course : </label> {{Ed.Course}}</div>
+                        <div><label>Duration :</label> From - {{Ed.Course_Duration_From}}Till-
+                            {{Ed.Course_Duration_Till}}</div>
+                        <div><label>Grade :</label> {{Ed.Grade}}</div>
+                    </div>
+                </div>
+                {%endfor%}
+
+                </table>
+                {%else%}
+                <center>
+                    <p id="Rectangle">No Data Yet</p>
+                </center>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-start ml-5">
+    <div class="col-8 ml-5">
+        <div id="Education" class="border border p-3 shadow p-3 mb-5 bg-white rounded">
+            <b style="color: rgb(59, 54, 54); font-size: large;">IT Skills &NonBreakingSpace;<i
+                    class="bi bi-laptop"></i></b>
+            <hr>
+            <div>
+                {%if ITSkills %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>IT Skill/Software</th>
+                            <th>Version</th>
+                            <th>Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for Skill in ITSkills %}
+                        <td>
+                            {{Skill.Software_Name}}
+                        </td>
+                        <td>{{Skill.Version}}</td>
+                        <td>{{Skill.Experience}}</td>
+                        </tr>
+                    </tbody>
+                    {%endfor%}
+                </table>
+                {%else%}
+                <center>
+                    <p id="Rectangle">No Data Yet</p>
+                </center>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

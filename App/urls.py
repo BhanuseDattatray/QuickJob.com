@@ -1,0 +1,35 @@
+from django.contrib import admin
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('',views.Home),
+    path('Signup',views.Signup),
+    path('Resume_Page', views.Resume_Page),
+    path('Update_Ed_Forms/<id>',views.Update_Ed_Forms),
+    path('Update_Forms_ITSkill/<id>',views.Update_Forms_ITSkill),
+    path('Forms',views.Forms),
+    path('Signin',views.Signin),
+    path('Signout',views.Signout),
+    path('Jobs',views.Jobs),
+    path('AddEducationNew',views.AddEducationNew,name='Add'),
+    path('EditEd/<id>',views.EditEd,name='EditEd'),
+    path('Delete_Forms_ITSkill/<id>',views.Delete_Forms_ITSkill),
+    path('Delete_Forms_Ed/<id>',views.Delete_Forms_Ed),
+    path('Rec_Register',views.Rec_Register),
+    path('Rec_signin',views.Rec_signin),
+    path('Rec_Signout',views.Rec_Signout),
+    path('Recruiter_Profile_Page',views.Recruiter_Profile_Page),
+    path('Cand_AppliedForJobs',views.Cand_AppliedForJobs),
+    path('UpdateJobListing/<id>',views.UpdateJobListing),
+    path('DeleteJobListing/<id>',views.DeleteJobListing),
+    path('Applied_frJobs/<id>',views.Applied_frJobs), 
+    path('Posted_Jobs',views.Posted_Jobs),
+    path('Selected_JobDetails/<id>',views.Selected_JobDetails),
+    path('SubmitAppliedJob/<id>',views.SubmitAppliedJob),
+    path('SeeCandidate_Profile/<id>',views.SeeCandidate_Profile),
+    path('Services_Rec',views.Services_Rec),  
+    path('ActivatePlan/<id>',views.ActivatePlan),
+    path('Companies',views.Companies),
+    path('ViewDetails/<id>',views.ViewDetails),
+]

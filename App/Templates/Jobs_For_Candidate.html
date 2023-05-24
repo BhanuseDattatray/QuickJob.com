@@ -1,0 +1,96 @@
+{%extends "Home.html" %}
+
+{%block "content" %}
+{%load static%}
+<div class="row justify-content-center">
+    <div class="col-7 offset-3">
+        {%if messages %}
+        {%for msg in messages%}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>{{msg}}</strong>
+          </div>
+        {%endfor%}
+        {%endif%}
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body shadow p-3 ml-5 mt-4 mb-4 bg-light rounded" style="width: 550px;">
+                <form class="form-inline justify-content-center" method="post">
+                    {%csrf_token%}
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><span class="bi bi-pin-map"></span></div>
+                            <div class="overflow-auto">
+                                <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                    onchange="this.size=1;" name="Selected_City" required style="width: 250px;">
+                                    {% for City in Cities %}
+                                    <option>{{City.City_Name}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Filter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        {%if JobListing %}
+        {%for Jobs in JobListing %}
+        <div class="row">
+            <div class="col-7 ml-5 mb-5 p-3 bg-white rounded">
+                <div class="d-flex flex-end justify-content-start mb-3">
+                    <div class="mr-auto">
+                        <h4>{{Jobs.Role}} <small><i>{{Jobs.Date_Of_Post}}</i></small></h4>
+                        <div class="mb-1"><small><label>{{Jobs.Company.Company_Name}}</label></small></div>
+                        <div class="d-flex justify-content-start">
+                            <div><i class="bi bi-bag"></i>&NonBreakingSpace;{{Jobs.Experience}}</div>
+                            <div class="ml-3">&#8377;&NonBreakingSpace;{{Jobs.Salary}}</div>
+                            <div class="ml-3"><span class="bi bi-pin-map"></span>&NonBreakingSpace;{{Jobs.Location}}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start mt-2">
+                            <div><i class="bi bi-mortarboard-fill"></i>{{Jobs.Education}}&NonBreakingSpace;</div>
+                        </div>
+                        <div class="d-flex justify-content-start mt-2">
+                            <div id="Desc"><i class="bi bi-file-earmark-text">&NonBreakingSpace;</i>{{Jobs.Description}}
+                            </div>
+                        </div>
+                        <div class="d-flex flex-end justify-content-start mb-3">
+                            <div class="mt-2 ml-auto">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <img {%if Jobs.Company.Logo.url %} src="{{Jobs.Company.Logo.url}}" {% else %}
+                            src="{% static 'images/img_avatar3.png' %}" alt="John Doe" {%endif%}
+                            class="rounded-circle ml-4" style="width:70px;">
+                        <div class="mt-2"><a href="/Selected_JobDetails/{{Jobs.id}}" class="btn btn-primary"
+                                role="button">View
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+        {%else%}
+        <div class="row">
+            <div class="col-8">
+                <center>
+                    <div class="mt-4">
+                        <span class="bg-primary p-3">No Job Posted Yet</span>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+{%endif%}
+{%endblock%}

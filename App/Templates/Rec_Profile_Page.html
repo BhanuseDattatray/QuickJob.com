@@ -1,0 +1,227 @@
+{% extends "Home.html" %}
+
+{%block "content" %}
+{%load static%}
+<div class="row py-3">
+    <div class="col-7 offset-3">
+        {%if messages %}
+        {%for msg in messages%}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>{{msg}}</strong>
+          </div>
+        {%endfor%}
+        {%endif%}
+    </div>
+    <div class="col-3 offset-1">
+        <div class="border border p-3 bg-white">
+            <div class="row">
+                <div class="col-md-2 p-4" style="height: 180px;">
+                    {%if User.Logo %}
+                    <img src="{{User.Logo.url}}" id="User_Photo-2" style="height: fit-content;">
+                    {%else%}
+                    <div id="Photo-2"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                            class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                            <path
+                                d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        </svg></div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="border border p-3 bg-white">
+            {%if Carasoule %}
+            <img src="{{User.Photo}}" alt="{{User.Company_Name}}" style="width: 720px; height: 200px;">
+            {%else%}
+            <img src="{% static 'images/dell.jpg' %}" alt="{{User.Company_Name}}" style="width: 720px; height: 200px;">
+            {%endif%}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3 offset-1 ">
+        <div id="QuickLink-2" class="border border p-3 bg-white">
+            <h4><a href="#" style="color: rgb(59, 54, 54);">Company Details</a>
+                {%if RecCheck %}
+                <button type="button" class="btn" data-toggle="modal" data-target="#CompanyData">
+                    <i class="material-icons">mode_edit</i>
+                </button>{%endif%}
+            </h4>
+            <!-- The Modal -->
+            <div class="modal fade" id="CompanyData">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Company Details </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body  p-5">
+                            <form method="post" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                <input type="hidden" name="id" value="{{User.id}}">
+                                <!-- Name input -->
+                                <div class="form-outline mb-4">
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" style="font-size: small;">Name</label>
+                                        <input type="text" class="form-control" name="Name" required
+                                            value="{{User.Name}}" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" style="font-size: small;">Company Name</label>
+                                        <input type="text" class="form-control" name="Company_Name" required
+                                            value="{{User.Company_Name}}" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" style="font-size: small;">Email</label>
+                                                <input type="text" class="form-control" name="Rec_Mail_Id" required
+                                                    value="{{User.Email}}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" style="font-size: small;">Mobile</label>
+                                                <input type="text" class="form-control" name="MOB" required
+                                                    value="{{User.MOB}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" style="font-size: small;">Address</label>
+                                        <input type="text" class="form-control" name="Address" required
+                                            value="{{User.Address}}" />
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" style="font-size: small;">City</label>
+                                                <div class="overflow-auto">
+                                                    <select class="form-control" onfocus="this.size=6;"
+                                                        onblur="this.size=1;" onchange="this.size=1;" name="City"
+                                                        required>{%if RecCheck %}
+                                                        {% for City in Cities %}
+                                                        <option>{{City.City_Name}}</option>
+                                                        {%endfor%}
+                                                        {%endif%}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" style="font-size: small;">Man Power</label>
+                                                <input type="number" class="form-control" name="Manpower" required
+                                                    value="{{User.Manpower}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" style="font-size: small;">Logo : jpg/png files
+                                            only</label>
+                                        <input type="file" name="Logo" required value="{{User.Logo}}" />
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn">Save</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="p-2">
+                <table>
+                    <tr>
+                        <td><label for="Name">Name -</label></td>
+                        <td>{{User.Name}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="Email">Email -</label></td>
+                        <td>{{User.Company_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="MOB">Mobile Number - </label></td>
+                        <td>{{User.MOB}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="Address">Address -</label></td>
+                        <td>{{User.Address}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="City">City -</label></td>
+                        <td>{{User.City}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="Manpower">Manpower -</label></td>
+                        <td>{{User.Manpower}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-7">
+        <div id="IT Skills" class="border border p-3 bg-white">
+            <b style="color: rgb(59, 54, 54); font-size: large;">Company Information</b>
+            {%if RecCheck %}<button type="button" class="btn" data-toggle="modal" data-target="#CompanyDesc">
+                <i class="material-icons">mode_edit</i>
+            </button>{%endif%}
+            <!-- The Modal -->
+            <div class="modal fade" id="CompanyDesc">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">IT Skills</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body  p-5">
+                            <form method="post" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                <input type="hidden" name="CompanyDetails" value="{{User.id}}">
+                                <div class="form-outline mb-4">
+                                    <div class="form-outline">
+                                        <label class="form-label" style="font-size: small;">Company Details</label>
+                                    </div>
+                                    <div>
+                                        <textarea name="Descriptions" id="Company_Description" cols="100" rows="10"
+                                            class="form"></textarea>
+                                    </div>
+                                    <div class="form-outline mt-4">
+                                        <label class="form-label" style="font-size: small;">Company Photos fo Gallery
+                                            View</label>
+                                        <input type="file" name="Carasoule" />
+                                    </div>
+                                </div>
+                        </div>
+            
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn">Save</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <div class="p-3">
+                {{User.Com_Description}}
+            </div>
+
+        </div>
+    </div>
+</div>
+{%endblock%}

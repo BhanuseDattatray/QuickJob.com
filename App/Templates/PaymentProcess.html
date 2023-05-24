@@ -1,0 +1,93 @@
+{%extends "Home.html" %}
+{%load static%}
+{%block "content"%}
+<div class="container d-flex justify-content-center mt-5 mb-5">
+    <div class="row border p-3">
+        <div class="col-6">
+            <span>Payment Method</span>
+            <div class="card">
+                <div>
+                    <div class="card">
+                        <div class="card-header p-0">
+                            <h2 class="mb-0">
+                                <button class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span>Credit card</span>
+                                        <div class="icons">
+                                            <img src="https://i.imgur.com/2ISgYja.png" width="30">
+                                            <img src="https://i.imgur.com/W1vtnOV.png" width="30">
+                                            <img src="https://i.imgur.com/2ISgYja.png" width="30">
+                                        </div>
+                                    </div>
+                                </button>
+                            </h2>
+                        </div>
+                        <div class="card-body payment-card-body">
+                            <span class="font-weight-normal card-text">Card Number</span>
+                            <form method="POST">
+                                {%csrf_token%}
+                                <div class="input">
+                                    <input type="text" class="form-control" placeholder="Name Of Card Holder"
+                                        name="Name" pattern="[A-Za-z]{1,32}\s[A-Za-z]{1,32}\s[A-Za-z]{1,32}" required>
+                                </div>
+                                <div class="input">
+                                    <input type="text" class="form-control"
+                                        title="Please Enter Card Number with Respective Spaces"
+                                        pattern="\d{4}\s\d{4}\s\d{4}\s\d{4}" placeholder="0000 0000 0000 0000"
+                                        name="CardNo" required>
+                                </div>
+                                <div class="row mt-3 mb-3">
+                                    <input type="hidden" name="Planid" value="{{Plan.id}}">
+                                    <div class="col-md-6">
+                                        <span class="font-weight-normal card-text">Expiry Date</span>
+                                        <div class="input">
+                                            <input type="text" class="form-control" placeholder="MM/YY" name="MonthYear"
+                                                required pattern="\w{2,2}/\w{2,2}" max="11/22" title="Please Enter Valid Expiry Date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="font-weight-normal card-text">CVC/CVV</span>
+                                        <div class="input">
+                                            <input type="text" class="form-control" placeholder="0000" name="CVV"
+                                                required pattern="\w{4}"  title="Please Enter Correct CVV Number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-muted certificate-text"><i class="fa fa-lock"></i><i
+                                        class="bi bi-shield-check"></i>&NonBreakingSpace; Your transaction is
+                                    secured<span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <span>Summary</span>
+            <div class="card">
+                <div class="d-flex justify-content-between p-3">
+                    <div class="d-flex flex-column">
+                        <span>Activating Offer</span>
+                        <a href="#" class="billing">{{Plan.PlanName}}</a>
+                    </div>
+                    <div class="mt-1">
+                        &#8377; &NonBreakingSpace;{{Plan.Price}}
+                    </div>
+                </div>
+                <hr class="mt-0">
+                <div class="p-3 d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <span>Today you pay</span>
+                    </div>
+                    <span>&#8377; &NonBreakingSpace;{{Plan.Price}}</span>
+                </div>
+                <div class="p-3">
+                    <button class="btn btn-primary btn-block">Pay</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

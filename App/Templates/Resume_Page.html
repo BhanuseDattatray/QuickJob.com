@@ -1,0 +1,718 @@
+{% extends "Home.html" %}
+
+{%block "content" %}
+<div class="row py-3">
+    <div class="col-10 offset-1">
+        {%if messages %}
+        {%for msg in messages%}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>{{msg}}</strong>
+          </div>
+        {%endfor%}
+        {%endif%}
+        <div id="DisplayPro" class="mb-5 rounded p-5">
+            <div class="row">
+                <div class="col-1 p-4">
+                    {%if ID.Photo %}
+                    <img src="{{ID.Photo.url}}" id="User_Photo" class="rounded-circle ml-1">
+                    {%else%}
+                    <div id="Photo"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                            class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                            <path
+                                d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        </svg></div>
+                    {%endif%}
+                </div>
+                <div class="col-md-6 offset-1">
+                    <b style="color: rgb(253, 245, 245); font-size: large;">{{ID.Name}}</b>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#PersonalDetail">
+                        <i class="material-icons" style="color:aliceblue;">mode_edit</i>
+                    </button><br>
+                    <!-- The Modal -->
+                    <div class="modal fade" id="PersonalDetail" style="color:black">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Personal Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body  p-5">
+                                    <form method="post" action="/Forms" id="PersonalInfo" enctype="multipart/form-data">
+                                        {%csrf_token%}
+                                        <div class="form-outline mb-4">
+                                            <input type="hidden" name="Personalinfo_Modal">
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" style="font-size: small;">Name</label>
+                                                <div>
+                                                    <input class="form-control" type="text" name="Name"
+                                                        value="{{ID.Name}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label" style="font-size: small;">Date Of
+                                                    Birth</label>
+                                                <div>
+                                                    {% if ID.DOB %}
+                                                    <input class="form-control" type="date" id="DateOfBirth" name="DOB">
+                                                    {%else%}
+                                                    <input class="form-control" type="date" id="DateOfBirth" name="DOB"
+                                                        required>
+                                                    {%endif%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" style="font-size: small;">City</label>
+                                            <div class="overflow-auto" id="Ed_Z">
+                                                <select class="form-control" onfocus="this.size=6;"
+                                                    onblur="this.size=1;" onchange="this.size=1;" name="Selected_City"
+                                                    required>
+                                                    {% for City in Cities %}
+                                                    <option>{{City.City_Name}}</option>
+                                                    {%endfor%}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" style="font-size: small;">Address</label>
+                                            <input type="text" class="form-control" value="{{ID.Address}}"
+                                                name="Address" required>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" style="font-size: small;">Gender</label>
+                                            <div class="overflow-auto">
+                                                <select class="form-control" onfocus="this.size=6;"
+                                                    onblur="this.size=1;" onchange="this.size=1;" value="{{ID.Gender}}"
+                                                    name="Gender" required>
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-5">
+                                                <label>Mobile Number</label>
+                                                <input type="tel" class="form-control" name="MOB" value="{{ID.MOB}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Eamil ID</label>
+                                                <input type="email" class="form-control" name="Email"
+                                                    value="{{ID.Email}}" readonly />
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <label>Experience</label>
+                                                <div class="overflow-auto" id="Ed_Z">
+                                                    <select class="form-control" onfocus="this.size=6;"
+                                                        onblur="this.size=1;" onchange="this.size=1;"
+                                                        name="Selected_Exp">
+                                                        {% for Exp in Experience %}
+                                                        <option>{{Exp.Duration}}</option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Available To Join</label>
+                                                <div class="overflow-auto" id="Ed_Z">
+                                                    <select class="form-control" onfocus="this.size=6;"
+                                                        onblur="this.size=1;" onchange="this.size=1;"
+                                                        name="Selected_ATJ" value="{{ID.Available_to_Join}}">
+                                                        {% for Days in Availabality %}
+                                                        <option>{{Days.ATJ}}</option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                    <input type="file" name="Photo" accept="image/png, image/jpeg" />
+                                                    <label>Add Profile Picture</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-second ary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary btn"
+                                        form="PersonalInfo">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </h5>
+                    <table id="ProfileTable">
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-map-marker"></span>
+                            </td>
+                            <td>
+                                <label>{{ID.Hometown}}</label>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-earphone"></span>
+                            </td>
+                            <td><label id="lbl">{{ID.MOB}}</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-briefcase"></span>
+                            </td>
+                            <td>
+                                <label id="lbl">{{ID.Experience}}</label>
+                            </td>
+                            <td>
+                                <div id="Pr5"><span class="glyphicon glyphicon-envelope"></span>
+                                </div>
+                            </td>
+                            <td><label id="lbl">{{request.session.Mail_Id}}</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="Pr3"><span class="glyphicon glyphicon-calendar"></span></div>
+                            </td>
+                            <td><label id="lbl">{{ID.Available_to_Join}}</label></td>
+                            <td>
+                                <div id="Pr3"><span class="glyphicon glyphicon-calendar"></span>
+                            </td>
+                            <td><label id="lbl">{{ID.DOB}}</label></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-4 p-4">
+                    <div id="Pending_Actions">
+                        <label for="list">Pending Actions</label>
+                        <ul id="list">
+                            <li>
+                                {%if ID.Name and ID.MOB and ID.Gender and ID.Address and ID.Hometown%}
+                                Personal Info is Added &NonBreakingSpace; <i class="bi bi-check-circle"></i>
+                                {%else%}
+                                Personal Info is Not Added &NonBreakingSpace; <i
+                                    class="bi bi-exclamation-circle"></i>{%endif%}
+                            </li>
+                            <li>{%if ID.Resume_Headline%}
+                                Resume Headline Added &NonBreakingSpace;<i class="bi bi-check-circle"></i>
+                                {%else%}Resume Headline Is Not Added&NonBreakingSpace; <i
+                                    class="bi bi-exclamation-circle"></i>
+                                {%endif%}
+                            </li>
+                            <li>{%if ID.id == Job_Ckr_Education.JobckrBELONG.id%}
+                                Education Added &NonBreakingSpace; <i class="bi bi-check-circle"></i>
+                                {%else%}
+                                Education Not Added&NonBreakingSpace; <i class="bi bi-exclamation-circle"></i>
+                                {%endif%}
+                            </li>
+                            <li>
+                                {%if i.JobCkrBELONG.id == ID.id%}
+                                IT Skills Are Added &NonBreakingSpace;<i class="bi bi-check-circle"></i>
+                                {%else%}
+                                IT Skills Are Not Added&NonBreakingSpace; <i class="bi bi-exclamation-circle"></i>
+                                {%endif%}
+                            </li>
+                            <li>
+                                {%if ID.Resume%}
+                                Resume is Added &NonBreakingSpace;<i class="bi bi-check-circle"></i>
+                                {%else%}
+                                Resume Not Added&NonBreakingSpace; <i class="bi bi-exclamation-circle"></i>
+                                {%endif%}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row py-3">
+    <div class="col-2 offset-1 ">
+        <div id="QuickLink" class="p-3 mb-5 bg-white rounded">
+            <h4 class="text-center"><a href="#" style="color: rgb(59, 54, 54);">QuickLink</a></h4>
+            <hr>
+            <div class="p-2">
+                <a href="#Resume">Add Resume</a><br>
+                <a href="#ResumeHeadline">Resume Headline</a><br>
+                <a href="#Education">Education</a><br>
+                <a href="#ITSkills">IT Skills</a><br>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 border bg-white">
+        <div id="ResumeHeadline" class="p-5 mb-5 rounded">
+            <b style="color: rgb(59, 54, 54); font-size: large;">Resume Headline</b>
+            <!-- Button to Open the Modal -->
+            <button type="button" class="btn" data-toggle="modal" data-target="#myModal">
+                <i class="material-icons">mode_edit</i>
+            </button><br>
+            <!-- The Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Resume Headline</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body p-5">
+                            <form method="post" id="Headline" action="/Forms">
+                                {%csrf_token%}
+                                <!-- Name input -->
+                                <div class="form-outline mb-4">
+                                    <label id="name" style="font-size: small;">It is the first thing
+                                        recruiters notice in your
+                                        profile. Write concisely what makes you unique and right person for
+                                        the job you are looking for.
+                                    </label>
+                                    <input type="hidden" name="Headline_Modal">
+                                    <textarea style="height: 100px; width: 700px;" name="Headline"></textarea>
+                                </div>
+                                <!-- Submit button -->
+                            </form>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" form="Headline">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </h5>
+            <hr>
+            <span>{{ID.Resume_Headline}}</span>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row py-3">
+</div>
+<div class="row py-3">
+    <div class="col-8 offset-3 bg-white">
+        <div id="Education" class="p-5 mb-5 rounded">
+            <b style="color: rgb(59, 54, 54); font-size: large;">Education</b>
+            <button type="button" class="btn" data-toggle="modal" data-target="#ED">
+                <i class="material-icons">mode_edit</i>
+            </button>
+            <!-- The Modal -->
+            <div class="modal fade" id="ED">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Education</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body  p-5">
+                            <form method="post" action="/Forms" id="U_Education">
+                                {%csrf_token%}
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="font-size: small;">Education</label>
+                                    <label class="form-label">Skills</label><input type="hidden" name="Ed_Modal">
+                                    <div class="overflow-auto" id="Ed_Z">
+                                        <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                            onchange="this.size=1;" name="Selected_Ed" required>
+                                            {% for Education in Educations %}
+                                            <option>{{Education.Education}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="font-size: small;">University/Institute</label>
+                                    <div class="overflow-auto">
+                                        <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                            onchange="this.size=1;" name="Selected_College" required>
+                                            {% for University in Universities %}
+                                            <option>{{University.College_Name}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="font-size: small;">Course</label>
+                                    <div class="overflow-auto" id="Ed_Z">
+                                        <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                            onchange="this.size=1;" name="Selected_Course" required>
+                                            {% for Courses in Course_Dtel %}
+                                            <option>{{Courses.Course}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">From</label>
+                                        <input type="date" id="datepicker" class="form-control" name="Ed_From" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">To</label>
+                                        <input type="date" id="datepicker" class="form-control" name="Ed_Till" required>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="Ed_Grade">Grades</label>
+                                        <input type="text" class="form-control" name="Ed_Grade" required>
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn">Save</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {%if User_Ed%}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Education</th>
+                            <th>
+                                <center>Update</center>
+                            </th>
+                            <th>
+                                <center>Delete</center>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for Ed in User_Ed %}
+                        <tr id="Skill">
+                            <td>
+                                <p id="Ed_Rectangle">
+                                    {{Ed.Education}}<br>{{Ed.University}}<br>
+                                    {{Ed.Course}}<br> From -{{Ed.Course_Duration_From}}Till-
+                                    {{Ed.Course_Duration_Till}}<br>{{Ed.Grade}}</p>
+                            </td>
+                            <td>
+                                <center>
+                                    <a href="#Update_ED-{{forloop.counter}}" class="edit" data-toggle="modal"><i
+                                            class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    </button>
+                                </center>
+                            </td>
+                            <td>
+                                <center><a href="#Delete_Ed-{{forloop.counter}}" class="delete" data-toggle="modal"><i
+                                            class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </center>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+                {%else%}
+                <center>
+                    <p id="Rectangle">No Data Yet</p>
+                </center>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Update Modal for Education Edit-->
+{%for Ed in User_Ed %}
+<!-- Edit Modal HTML -->
+<div id="Update_ED-{{forloop.counter}}" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Education</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body  p-5">
+                <form action="/Update_Ed_Forms/{{Ed.id}}" method="post">
+                    {%csrf_token%}
+                    <div class="form-outline mb-4">
+                        <label class="form-label" style="font-size: small;">Education</label>
+                        <label class="form-label">Skills</label><input type="hidden" name="Ed_Modal">
+                        <div class="overflow-auto" id="Ed_Z">
+                            <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                onchange="this.size=1;" name="Selected_Ed" required>
+                                {% for Education in Educations %}
+                                <option>{{Education.Education}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" style="font-size: small;">University/Institute</label>
+                            <div class="overflow-auto" id="Ed_Z">
+                                <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                    onchange="this.size=1;" name="Selected_College" required>
+                                    {% for University in Universities %}
+                                    <option>{{University.College_Name}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" style="font-size: small;">Course</label>
+                        <div class="overflow-auto" id="Ed_Z">
+                            <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                onchange="this.size=1;" name="Selected_Course" required>
+                                {% for Courses in Course_Dtel %}
+                                <option>{{Courses.Course}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">From</label>
+                            <input type="date" id="datepicker" class="form-control" name="Ed_From" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">To</label>
+                            <input type="date" id="datepicker" class="form-control" name="Ed_Till" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Ed_Grade">Grades</label>
+                            <input type="text" class="form-control" name="Ed_Grade" required>
+                        </div>
+                    </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <input type="submit" class="btn btn-success" value="Update">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endfor%}
+<!--Delete Modal for Delete Soft Skills-->
+{%for Ed in User_Ed %}
+<div class="modal fade" id="Delete_Ed-{{forloop.counter}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="Delete_Forms_Ed/{{Ed.id}}" method="post">
+                {%csrf_token%}
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Education</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete {{Ed.Course}} Record?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endfor%}
+
+
+<!-- Add IT Skills Starts Here-->
+<div class="row py-3">
+    <div class="col-8 offset-3 bg-white">
+        <div id="ITSkills" class="p-5 mb-5 bg-white rounded">
+            <b style="color: rgb(59, 54, 54); font-size: large;">IT Skills</b>
+            <button type="button" class="btn" data-toggle="modal" data-target="#IT">
+                <i class="material-icons">mode_edit</i>
+            </button><br>
+            <!-- The Modal -->
+            <div class="modal fade" id="IT">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">IT Skills</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body  p-5">
+                            <form method="post" action="/Forms" id="SoftmodalForm">
+                                {%csrf_token%}
+                                <input type="hidden" name="Soft_Modal">
+                                <!-- Name input -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="font-size: small;">Skills/Software</label>
+                                    <div class="form-outline mb-4">
+                                        <div class="overflow-auto" id="Ed_Z">
+                                            <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                                onchange="this.size=1;" name="Selected_Software" required>
+                                                {% for SoftwareName in SoftwaresList %}
+                                                <option>{{SoftwareName.Software}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" style="font-size: small;">Version</label>
+                                        <input type="text" class="form-control" name="Version" required />
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" style="font-size: small;">
+                                                Experince</label>
+                                            <div class="form-outline mb-4">
+                                                <div class="overflow-auto" id="Ed_Z">
+                                                    <select class="form-control" onfocus="this.size=6;"
+                                                        onblur="this.size=1;" onchange="this.size=1;"
+                                                        name="Selected_Exp" required>
+                                                        {% for Exp in Experience %}
+                                                        <option>{{Exp.Duration}}</option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn">Save</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {%if ITSkills %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Software</th>
+                            <th>Version</th>
+                            <th>Experience</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for Skill in ITSkills %}
+                        <tr id="Skill">
+                            <td>
+                                <p id="Ed_Rectangle">
+                                    {{Skill.Software_Name}}
+                            </td>
+                            <td>{{Skill.Version}}</td>
+                            <td>{{Skill.Experience}}</td>
+                            <td><a href="#Update_IT-{{forloop.counter}}" class="edit" data-toggle="modal"><i
+                                        class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                </button>
+                            </td>
+                            <td><a href="#Delete_IT-{{forloop.counter}}" class="delete" data-toggle="modal"><i
+                                        class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {%endfor%}
+                </table>
+                {%else%}
+                <center>
+                    <p id="Rectangle">No Data Yet</p>
+                </center>
+                {%endif%}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- The Skill Update Starts here -->
+{%for Skill in ITSkills %}
+<div class="modal fade" id="Update_IT-{{forloop.counter}}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Education</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body  p-5">
+                <form action="Update_Forms_ITSkill/{{Skill.id}}" method="post">
+                    {%csrf_token%}
+                    <div class="form-outline mb-4">
+                        <label class="form-label">Skills/Softwares</label>
+                        <div class="overflow-auto">
+                            <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                onchange="this.size=1;" name="Selected_Software" required>
+                                {% for SoftwareName in SoftwaresList %}
+                                <option>{{SoftwareName.Software}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="form-outline mb-4">
+                            <div class="overflow-auto" id="Ed_Z">
+                                <label class="form-label" style="font-size: small;">Version</label>
+                                <input type="text" class="form-control" name="Version" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" style="font-size: small;">
+                            Experince</label>
+                        <div class="form-outline mb-4">
+                            <div class="overflow-auto" id="Ed_Z">
+                                <select class="form-control" onfocus="this.size=6;" onblur="this.size=1;"
+                                    onchange="this.size=1;" name="Selected_Exp">
+                                    {% for Exp in Experience %}
+                                    <option>{{Exp.Duration}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <input type="submit" class="btn btn-success" value="Update">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endfor%}
+
+<!--Delete Modal for Delete Soft Skills-->
+{%for Skill in ITSkills %}
+<div class="modal fade" id="Delete_IT-{{forloop.counter}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="Delete_Forms_ITSkill/{{Skill.id}}" method="post">
+                {%csrf_token%}
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Employee</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete {{Skill.Software_Name}} these Record?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endfor%}
+{%endblock%}

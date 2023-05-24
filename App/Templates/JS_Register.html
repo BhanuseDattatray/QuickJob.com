@@ -1,0 +1,80 @@
+{% extends 'Home.html' %}
+
+{%block "content" %}
+<script src="JS_Register_Validation.js"></script>
+{%load static%}
+<div class="container" style="background-color: aliceblue;">
+    <div class="row border justify-content-end">
+        <div class="col-3">
+            <table>
+                <tr>
+                    <td></td>
+                    <center>
+                        <td colspan="2"><img src="{% static 'images/green.svg' %}" style="padding: 30px;"></td>
+                    </center>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-ok-sign">&NonBreakingSpace;</span></td>
+                    <td>Build your profile and let recruiters find you</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-ok-sign">&NonBreakingSpace;</td>
+                    <td>Get job postings delivered right to your email</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-ok-sign">&NonBreakingSpace;</span></td>
+                    <td>Build your profile and let recruiters find you</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-9">
+            <h2
+                style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                Find a job & grow your career</h2>
+            <br>
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Full Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Name" placeholder="Enter Name" name="Name"
+                            style="width:300px;" pattern="[A-Za-z]{1,32}\s[A-Za-z]{1,32}\s[A-Za-z]{1,32}" title="Please Enter Name in Format Your Name Father Name Surnam" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Email:</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="Email" placeholder="Enter Your Email" name="Email"
+                            style="width:300px;" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd"
+                            style="width:300px;" minlength="5" maxlength="15" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Mobile Number:</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="MOB" placeholder="Enter Your Mobile Number"
+                            name="MOB" style="width:300px;" required pattern="\d{10,10}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label col-sm-2">Resume: Pdf/Word file</label>
+                    <div class="col-sm-10">
+                        <input type="file" id="Resume" name="Resume" style="height: fit-content;" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-2 ">
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}
