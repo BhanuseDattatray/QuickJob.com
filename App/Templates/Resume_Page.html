@@ -202,18 +202,22 @@
                                     class="bi bi-exclamation-circle"></i>
                                 {%endif%}
                             </li>
-                            <li>{%if ID.id == Job_Ckr_Education.JobckrBELONG.id%}
+                            <li>
+                                {{Ed.Education}}
+                                {%if User_Ed%}
                                 Education Added &NonBreakingSpace; <i class="bi bi-check-circle"></i>
                                 {%else%}
+                                {{ID.id}}
                                 Education Not Added&NonBreakingSpace; <i class="bi bi-exclamation-circle"></i>
                                 {%endif%}
                             </li>
                             <li>
-                                {%if i.JobCkrBELONG.id == ID.id%}
+                                {%if ITSkills%}
                                 IT Skills Are Added &NonBreakingSpace;<i class="bi bi-check-circle"></i>
                                 {%else%}
                                 IT Skills Are Not Added&NonBreakingSpace; <i class="bi bi-exclamation-circle"></i>
                                 {%endif%}
+                                
                             </li>
                             <li>
                                 {%if ID.Resume%}
