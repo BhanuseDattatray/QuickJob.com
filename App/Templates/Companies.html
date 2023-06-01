@@ -2,27 +2,28 @@
 {%block "content" %}
 {%load static%}
 
-<div class="container"> 
+<div class="container">
   <div class="row">
     <div class="col-12 border mb-5">
       <h3 class="text-center p-2" style="color:aliceblue">All Valuable Companies Working With www.QuickJobs.com </h3>
     </div>
-  </div>  
-    <div class="row mt-5">
-      {%for Company in Companies%}
-      <div class="col-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading text-center">{{Company.Company_Name}}</div>
-          <div class="panel-body"><img src="{{Company.Logo.url}}" class="img-responsive ml-3" 
+  </div>
+  <div class="row mt-5">
+    {%for Company in Companies%}
+    <div class="col-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center">{{Company.Company_Name}}</div>
+        <div class="panel-body"><img src="{{Company.Logo.url}}" class="img-responsive ml-3"
             style="height:200px;width:200px;" alt="Image"></div>
-            {%if 'Rec_Mail_Id' in request.session or 'Mail_Id' in request.session %}
-          <div class="panel-footer text-center">
-            <a href="/ViewDetails/{{Company.id}}">View Details</a>
-          </div>{%endif%}
-        </div>
-        </div>
-        {%endfor%}
-      </div>    
-  </div><br>
+        {%if 'Rec_Mail_Id' in request.session or 'Mail_Id' in request.session %}
+        <div class="panel-footer text-center">
+          <a href="/ViewDetails/{{Company.id}}">View Details</a>
+        </div>{%endif%}
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
 
 {%endblock%}

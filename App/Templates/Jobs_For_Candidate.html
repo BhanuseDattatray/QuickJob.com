@@ -38,8 +38,8 @@
     </div>
 </div>
 
-<div class="row mt-5">
-    <div class="col-12">
+<div class="row mt-5 ml-5">
+    <div class="col-12 mt-5">
         {%if JobListing %}
         {%for Jobs in JobListing %}
         <div class="row">
@@ -63,7 +63,6 @@
                         </div>
                         <div class="d-flex flex-end justify-content-start mb-3">
                             <div class="mt-2 ml-auto">
-
                             </div>
                         </div>
                     </div>
@@ -80,17 +79,16 @@
             </div>
         </div>
         {%endfor%}
+    </div>
+</div>
         {%else%}
         <div class="row">
             <div class="col-8">
-                <center>
-                    <div class="mt-4">
+                    <div class="mt-4 text-center">
                         <span class="bg-primary p-3">No Job Posted Yet</span>
                     </div>
-                </center>
             </div>
         </div>
-    </div>
-</div>
+
 {%endif%}
 {%endblock%}
